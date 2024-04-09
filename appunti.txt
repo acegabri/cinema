@@ -1,0 +1,16 @@
+file api.php (entry point del programma) che conterrà le response con gli end point
+endpoint per gli attori, per i film, per i generi
+
+In questo file avremo dei controlli sul metodo, che se non è GET, restituirà un
+codice di errore 405, quindi il metodo non è permesso.
+
+Se il metodo è GET, controlla l'array $_server, contenente la path info, quindi
+controllerà l'end point.
+
+quindi api.php serve per serializzare i dati.
+
+per prendere i dati dal db e visualizzarli dichiareremo una serie di funzioni dentro
+il file db_query.php
+
+Ciascuna funzione serve un endpoint.
+
