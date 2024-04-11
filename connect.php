@@ -6,11 +6,12 @@ $db_user = "root";
 $db_password = "";
 $conn = mysqli_connect($db_host, $db_user, $db_password, $db);
 
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+if (mysqli_connect_errno()) {
+
+    echo "" . mysqli_connect_error();
+
 } else {
 
-    
     function get_movies()
     {
         $movies = array();
@@ -20,7 +21,7 @@ if (!$conn) {
         $query = 'select * from movie';
         $result = $conn->query($query);
         while ($row = $result->fetch_assoc()) {
-            echo $row['title'];
+            //echo $row['title'];
             $movies[] = $row;
         }
         return $movies;
@@ -35,7 +36,7 @@ if (!$conn) {
         $query = 'select * from movie';
         $result = $conn->query($query);
         while ($row = $result->fetch_assoc()) {
-            echo $row['title'];
+            //echo $row['title'];
             $actors[] = $row;
         }
         return $actors;
@@ -50,7 +51,7 @@ if (!$conn) {
         $query = 'select * from movie';
         $result = $conn->query($query);
         while ($row = $result->fetch_assoc()) {
-            echo $row['title'];
+            // $row['title'];
             $genres[] = $row;
         }
         return $genres;
@@ -65,7 +66,7 @@ if (!$conn) {
         $query = 'select * from movie';
         $result = $conn->query($query);
         while ($row = $result->fetch_assoc()) {
-            echo $row['title'];
+            //echo $row['title'];
             $directors[] = $row;
         }
         return $directors;
