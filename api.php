@@ -2,6 +2,8 @@
 
 require_once("connect.php");
 
+//echo $_SERVER['PATH_INFO'] ;
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if ($_SERVER['PATH_INFO'] === 'movies') {
 
@@ -54,8 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         header('Content-Type: application/json');
         echo json_encode(
             [
-                "status" => "200",
-                "message" => "Request ok, but no endpoint specified",
+                "status" => "404",
+                "message" => "Endpoint not found",
                 "payload" => []
             ]
         );
