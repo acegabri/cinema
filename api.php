@@ -1,47 +1,72 @@
 <?php
+require_once("connect.php");
 
-require_once ("connect.php");
-$user_input = $_POST['user_input'];
-$user_input_endpoint = $_POST['chiave'];
+// Funzione per gestire le richieste di risorse
+function handle_resource_request($resource)
+{
+    $user_input = null;
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $endpoint = trim($user_input_endpoint, '/');
-    switch ($endpoint) {
+    // Determina il parametro di ricerca in base al tipo di risorsa
+    switch ($resource) {
         case 'movies':
-            $data = get_movies($user_input);
+            $search_param = isset($_GET['title']) ? 'title' : (isset($_GET['synopsis']) ? 'synopsis' : (isset($_GET['duration']) ? 'duration' : (isset($_GET['released_year']) ? 'released_year' : null)));
             break;
         case 'actors':
-            $data = get_actors($user_input);
-            break;
         case 'directors':
-            $data = get_directors($user_input);
+            $search_param = isset($_GET['last_name']) ? 'last_name' : (isset($_GET['name']) ? 'name' : null);
             break;
         case 'genres':
-            $data = get_genres($user_input);
+            $search_param = isset($_GET['name']) ? 'name' : null;
             break;
         default:
-            http_response_code(404);
-            $data = [
-                "status" => "404",
-                "message" => "Endpoint not found",
-                "payload" => []
-            ];
-            break;
+            return http_response_code(404);
     }
 
+    if ($search_param !== null) {
+        $user_input = $_GET[$search_param];
+    }
+
+    // Ottieni i risultati dalla funzione appropriata
+    $results = call_user_func("get_$resource", $user_input);
+
+    // Invia la risposta
+    send_response($results);
+}
+
+// Funzione per inviare la risposta JSON
+function send_response($payload)
+{
     http_response_code(200);
-    header('Content-Type: application/json');
-    echo json_encode($data);
+    header("Content-Type: application/json");
+    echo json_encode([
+        "status" => 200,
+        "message" => "OK",
+        "payload" => $payload
+    ]);
+}
+
+// Gestione della richiesta
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    if (isset($_SERVER['PATH_INFO'])) {
+        $resource = trim($_SERVER['PATH_INFO'], '/');
+        handle_resource_request($resource);
+    } else {
+        http_response_code(400);
+        header("Content-Type: application/json");
+        echo json_encode([
+            "status" => 400,
+            "message" => "Bad Request",
+            "payload" => []
+        ]);
+    }
 } else {
     http_response_code(405);
     header("Content-Type: application/json");
-    echo json_encode(
-        [
-            "status" => "405",
-            "message" => "Method Not Allowed",
-            "payload" => []
-        ]
-    );
+    echo json_encode([
+        "status" => 405,
+        "message" => "Method not allowed",
+        "payload" => []
+    ]);
 }
 
 exit;

@@ -1,79 +1,53 @@
 <?php
+function execute_query($table, $user_input, $search_field)
+{
+    $results = array();
 
-# select * from movie where title like "%god%"
+    $mysqli = new mysqli("mysql", "root", "root", "db_film");
+    if ($mysqli->connect_errno) {
+        echo "Failed to connect to MySQL: " . $mysqli->connect_error;
+        exit();
+    }
 
-$db = "db_film";
-$db_host = "localhost";
-$db_user = "gabriele";
-$db_password = "gugrina";
-$dsn = "mysql:host=$db_host;dbname=$db";
-$PDO = new PDO($dsn, $db_user, $db_password);
+    $query = "SELECT * FROM $table";
+    if ($user_input !== NULL) {
+        switch ($search_field) {
+            case 'title':
+            case 'released_year':
+                $query .= " WHERE $search_field LIKE '%$user_input%'";
+                break;
+            default:
+                break;
+        }
+    }
+
+    $result = $mysqli->query($query);
+
+    while ($row = $result->fetch_assoc()) {
+        $results[] = $row;
+    }
+
+    $mysqli->close();
+
+    return $results;
+}
 
 function get_movies($user_input)
 {
-    global $PDO;
-    if ($user_input === null) {
-
-        $query = 'SELECT * FROM movie';
-
-    } else {
-
-        $query = 'SELECT * FROM movie where title like' . '%' . $user_input . '%';
-
-    }
-
-    $stmt = $PDO->query($query);
-    return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    return execute_query("movie", $user_input, isset($_GET['title']) ? 'title' : (isset($_GET['released_year']) ? 'released_year' : null));
 }
 
 function get_actors($user_input)
 {
-    global $PDO;
-    if ($user_input === null) {
-
-        $query = 'SELECT * FROM actor';
-
-    } else {
-
-        $query = 'SELECT * FROM actor where last_name like' . '%' . $user_input . '%';
-
-    }
-
-    $stmt = $PDO->query($query);
-    return $stmt->fetchAll(PDO::FETCH_COLUMN);
-}
-
-function get_genres($user_input)
-{
-    global $PDO;
-    if ($user_input === null) {
-
-        $query = 'SELECT * FROM genre';
-
-    } else {
-
-        $query = 'SELECT * FROM genre where name like' . '%' . $user_input . '%';
-
-    }
-
-    $stmt = $PDO->query($query);
-    return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    return execute_query("actor", $user_input, isset($_GET['last_name']) ? 'last_name' : (isset($_GET['name']) ? 'name' : null));
 }
 
 function get_directors($user_input)
 {
-    global $PDO;
-    if ($user_input === null) {
+    return execute_query("director", $user_input, isset($_GET['last_name']) ? 'last_name' : (isset($_GET['name']) ? 'name' : null));
+}
 
-        $query = 'SELECT * FROM director';
-
-    } else {
-
-        $query = 'SELECT * FROM director where last_name like' . '%' . $user_input . '%';
-
-    }
-
-    $stmt = $PDO->query($query);
-    return $stmt->fetchAll(PDO::FETCH_COLUMN);
-
+function get_genres($user_input)
+{
+    return execute_query("genre", $user_input, isset($_GET['name']) ? 'name' : null);
 }
