@@ -111,7 +111,6 @@ INSERT INTO `genre` (`id`, `name`, `slug`) VALUES
 (13, 'Sci-Fi', NULL);
 
 -- --------------------------------------------------------
-
 --
 -- Struttura della tabella `movie`
 --

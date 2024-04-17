@@ -1,21 +1,23 @@
 <?php
 
-require_once("connect.php");
+require_once ("connect.php");
+$user_input = $_POST['user_input'];
+$user_input_endpoint = $_POST['chiave'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $endpoint = trim($_SERVER['PATH_INFO'], '/');
+    $endpoint = trim($user_input_endpoint, '/');
     switch ($endpoint) {
         case 'movies':
-            $data = get_movies();
+            $data = get_movies($user_input);
             break;
         case 'actors':
-            $data = get_actors();
+            $data = get_actors($user_input);
             break;
         case 'directors':
-            $data = get_directors();
+            $data = get_directors($user_input);
             break;
         case 'genres':
-            $data = get_genres();
+            $data = get_genres($user_input);
             break;
         default:
             http_response_code(404);
