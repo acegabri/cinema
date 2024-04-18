@@ -30,7 +30,7 @@ function get_movies($user_input, $filter)
         $actors_result = $mysqli->query($actors_sql);
 
         if (!$actors_result) {
-            die("error retrieving actors ". $mysqli->error);
+            die("error retrieving actors " . $mysqli->error);
         }
 
         while ($actorRow = mysqli_fetch_assoc($actors_result)) {
@@ -64,7 +64,7 @@ function get_actors($user_input, $filter)
     if ($user_input !== NULL) {
         if ($filter === 'last_name') {
             $query = 'SELECT * FROM actor WHERE last_name LIKE "%' . $user_input . '%"';
-        } else if ( $filter === 'name') {
+        } else if ($filter === 'name') {
             $query = 'SELECT * FROM actor WHERE name LIKE "%' . $user_input . '%"';
         }
     } else if ($user_input === NULL) {
@@ -75,6 +75,27 @@ function get_actors($user_input, $filter)
 
     while ($row = $result->fetch_assoc()) {
         $actors[] = $row;
+
+        $last_actor = $actors[count($actors) - 1];
+        $actor_id = $last_actor['id'];
+        $movies_sql = "select movie.id, movie.title, movie.synopsis, movie.duration, movie.released_year from movie join movie_actor on movie.id = movie_actor.movie_id where movie_actor.actor_id = $actor_id";
+        $movies_result = $mysqli->query($movies_sql);
+
+        if (!$movies_result) {
+            die("error retrieving actors " . $mysqli->error);
+        }
+
+        while ($moviesRow = mysqli_fetch_assoc($movies_result)) {
+            $actors[count($actors) - 1]['movies'][] = [
+
+                "id" => $moviesRow['id'],
+                "synopsis" => $moviesRow['synopsis'],
+                "title" => $moviesRow['title'],
+                "duration" => $moviesRow['duration'],
+                "released_year" => $moviesRow['released_year'],
+
+            ];
+        }
     }
 
 
@@ -85,7 +106,7 @@ function get_actors($user_input, $filter)
 
 
 function get_directors($user_input, $filter)
-{  
+{
     $directors = array();
 
     $mysqli = new mysqli("mysql", "root", "root", "db_film");
@@ -109,6 +130,27 @@ function get_directors($user_input, $filter)
 
     while ($row = $result->fetch_assoc()) {
         $directors[] = $row;
+
+        $last_director= $directors[count($directors) - 1];
+        $director_id = $last_director['id'];
+        $movies_sql = "select movie.id, movie.title, movie.synopsis, movie.duration, movie.released_year from movie join movie_director on movie.id = movie_director.movie_id where movie_director.director_id = $director_id";
+        $movies_result = $mysqli->query($movies_sql);
+
+        if (!$movies_result) {
+            die("error retrieving actors " . $mysqli->error);
+        }
+
+        while ($moviesRow = mysqli_fetch_assoc($movies_result)) {
+            $directors[count($directors) - 1]['movies'][] = [
+
+                "id" => $moviesRow['id'],
+                "synopsis" => $moviesRow['synopsis'],
+                "title" => $moviesRow['title'],
+                "duration" => $moviesRow['duration'],
+                "released_year" => $moviesRow['released_year'],
+
+            ];
+        }
     }
 
 
