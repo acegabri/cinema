@@ -1,6 +1,6 @@
 <?php
 function get_movies($user_input, $filter)
-{  //FUNZIONA
+{
     $movies = array();
 
     $mysqli = new mysqli("mysql", "root", "root", "db_film");
@@ -23,6 +23,25 @@ function get_movies($user_input, $filter)
 
     while ($row = $result->fetch_assoc()) {
         $movies[] = $row;
+
+        $last_movie = $movies[count($movies) - 1];
+        $movie_id = $last_movie['id'];
+        $actors_sql = "select actor.id actor.name, actor.last_name from actor join movie_actor on actor.id = movie_actor.actor_id where movie_actor.movie_id = $movie_id";
+        $actors_result = $mysqli->query($actors_sql);
+
+        if (!$actors_result) {
+            die("error retrieving actors ". $mysqli->error);
+        }
+
+        while ($actorRow = mysqli_fetch_assoc($actors_result)) {
+            $movies[count($movies) - 1]['actors'][] = [
+
+                "id" => $actorRow['id'],
+                "first_name" => $actorRow['name'],
+                "last_name" => $actorRow['last_name'],
+
+            ];
+        }
     }
 
 
