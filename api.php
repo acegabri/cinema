@@ -3,8 +3,7 @@ require_once("connect.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ($_SERVER['PATH_INFO'] == '/movies') {
-        //localhost:8000/api.php/movies
-        //qui estraggo i file
+
 
         if (isset($_GET['title'])) {
             $user_input = $_GET['title'];
@@ -67,7 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         } else if (isset($_GET['name'])) {
             $user_input = $_GET['name'];
             $filter = 'name';
-
         } else {
             $user_input = NULL;
             $filter = 'NULL';
@@ -90,9 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if (isset($_GET['name'])) {
             $user_input = $_GET['name'];
             $filter = 'name';
-        } /*else if (isset($_GET['slug'])) {    
-                $user_input = $_GET['slug'];
-            }*/ else {
+        } else {
             $user_input = NULL;
             $filter = 'NULL';
         }
