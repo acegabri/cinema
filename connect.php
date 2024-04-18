@@ -1,7 +1,7 @@
 <?php
-function execute_query($table, $user_input, $search_field)
-{
-    $results = array();
+function get_movies($user_input, $filter)
+{  //FUNZIONA
+    $movies = array();
 
     $mysqli = new mysqli("mysql", "root", "root", "db_film");
     if ($mysqli->connect_errno) {
@@ -9,45 +9,122 @@ function execute_query($table, $user_input, $search_field)
         exit();
     }
 
-    $query = "SELECT * FROM $table";
     if ($user_input !== NULL) {
-        switch ($search_field) {
-            case 'title':
-            case 'released_year':
-                $query .= " WHERE $search_field LIKE '%$user_input%'";
-                break;
-            default:
-                break;
+        if ($filter === 'title') {
+            $query = 'SELECT * FROM movie WHERE title LIKE "%' . $user_input . '%"';
+        } else if ($filter === 'released_year') {
+            $query = 'SELECT * FROM movie WHERE released_year LIKE "%' . $user_input . '%"';
         }
+    } else if ($user_input === NULL) {
+        $query = 'SELECT * FROM movie';
     }
 
     $result = $mysqli->query($query);
 
     while ($row = $result->fetch_assoc()) {
-        $results[] = $row;
+        $movies[] = $row;
     }
+
 
     $mysqli->close();
 
-    return $results;
+    return $movies;
 }
 
-function get_movies($user_input)
-{
-    return execute_query("movie", $user_input, isset($_GET['title']) ? 'title' : (isset($_GET['released_year']) ? 'released_year' : null));
+
+function get_actors($user_input, $filter)
+{  //FUNZIONA
+    $actors = array();
+
+    $mysqli = new mysqli("mysql", "root", "root", "db_film");
+    if ($mysqli->connect_errno) {
+        echo "Failed to connect to MySQL: " . $mysqli->connect_error;
+        exit();
+    }
+
+    if ($user_input !== NULL) {
+        if ($filter === 'last_name') {
+            $query = 'SELECT * FROM actor WHERE last_name LIKE "%' . $user_input . '%"';
+        } else if ( $filter === 'name') {
+            $query = 'SELECT * FROM actor WHERE name LIKE "%' . $user_input . '%"';
+        }
+    } else if ($user_input === NULL) {
+        $query = 'SELECT * FROM actor';
+    }
+
+    $result = $mysqli->query($query);
+
+    while ($row = $result->fetch_assoc()) {
+        $actors[] = $row;
+    }
+
+
+    $mysqli->close();
+
+    return $actors;
 }
 
-function get_actors($user_input)
-{
-    return execute_query("actor", $user_input, isset($_GET['last_name']) ? 'last_name' : (isset($_GET['name']) ? 'name' : null));
+
+function get_directors($user_input, $filter)
+{  
+    $directors = array();
+
+    $mysqli = new mysqli("mysql", "root", "root", "db_film");
+    if ($mysqli->connect_errno) {
+        echo "Failed to connect to MySQL: " . $mysqli->connect_error;
+        exit();
+    }
+
+
+    if ($user_input !== NULL) {
+        if ($filter === 'last_name') {
+            $query = 'SELECT * FROM director WHERE last_name LIKE "%' . $user_input . '%"';
+        } else if ($filter === 'name') {
+            $query = 'SELECT * FROM director WHERE name LIKE "%' . $user_input . '%"';
+        }
+    } else if ($user_input === NULL) {
+        $query = 'SELECT * FROM director';
+    }
+
+    $result = $mysqli->query($query);
+
+    while ($row = $result->fetch_assoc()) {
+        $directors[] = $row;
+    }
+
+
+    $mysqli->close();
+
+    return $directors;
 }
 
-function get_directors($user_input)
-{
-    return execute_query("director", $user_input, isset($_GET['last_name']) ? 'last_name' : (isset($_GET['name']) ? 'name' : null));
-}
 
-function get_genres($user_input)
+function get_genres($user_input, $filter)
 {
-    return execute_query("genre", $user_input, isset($_GET['name']) ? 'name' : null);
+    $genres = array();
+
+    $mysqli = new mysqli("mysql", "root", "root", "db_film");
+    if ($mysqli->connect_errno) {
+        echo "Failed to connect to MySQL: " . $mysqli->connect_error;
+        exit();
+    }
+
+    if ($user_input !== NULL) {
+        if ($filter === 'name') {
+            $query = 'SELECT * FROM genre WHERE name LIKE "%' . $user_input . '%"';
+        }
+    } else if ($user_input === NULL) {
+        $query = 'SELECT * FROM genre';
+    }
+
+    $result = $mysqli->query($query);
+
+    while ($row = $result->fetch_assoc()) {
+        $genres[] = $row;
+    }
+
+
+    $mysqli->close();
+
+    return $genres;
 }

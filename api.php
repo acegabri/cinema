@@ -1,62 +1,111 @@
 <?php
 require_once("connect.php");
 
-// Funzione per gestire le richieste di risorse
-function handle_resource_request($resource)
-{
-    $user_input = null;
-
-    // Determina il parametro di ricerca in base al tipo di risorsa
-    switch ($resource) {
-        case 'movies':
-            $search_param = isset($_GET['title']) ? 'title' : (isset($_GET['synopsis']) ? 'synopsis' : (isset($_GET['duration']) ? 'duration' : (isset($_GET['released_year']) ? 'released_year' : null)));
-            break;
-        case 'actors':
-        case 'directors':
-            $search_param = isset($_GET['last_name']) ? 'last_name' : (isset($_GET['name']) ? 'name' : null);
-            break;
-        case 'genres':
-            $search_param = isset($_GET['name']) ? 'name' : null;
-            break;
-        default:
-            return http_response_code(404);
-    }
-
-    if ($search_param !== null) {
-        $user_input = $_GET[$search_param];
-    }
-
-    // Ottieni i risultati dalla funzione appropriata
-    $results = call_user_func("get_$resource", $user_input);
-
-    // Invia la risposta
-    send_response($results);
-}
-
-// Funzione per inviare la risposta JSON
-function send_response($payload)
-{
-    http_response_code(200);
-    header("Content-Type: application/json");
-    echo json_encode([
-        "status" => 200,
-        "message" => "OK",
-        "payload" => $payload
-    ]);
-}
-
-// Gestione della richiesta
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if (isset($_SERVER['PATH_INFO'])) {
-        $resource = trim($_SERVER['PATH_INFO'], '/');
-        handle_resource_request($resource);
-    } else {
-        http_response_code(400);
+    if ($_SERVER['PATH_INFO'] == '/movies') {
+        //localhost:8000/api.php/movies
+        //qui estraggo i file
+
+        if (isset($_GET['title'])) {
+            $user_input = $_GET['title'];
+            $filter = 'title';
+        } else if (isset($_GET['synopsis'])) {
+            $user_input = $_GET['synopsis'];
+            $filter = 'synopsis';
+        } else if (isset($_GET['duration'])) {
+            $user_input = $_GET['duration'];
+            $filter = 'duration';
+        } else if (isset($_GET['released_year'])) {
+            $user_input = $_GET['released_year'];
+            $filter = 'released_year';
+        } else {
+            $user_input = NULL;
+            $filter = NULL;
+        }
+
+        $movies = get_movies($user_input, $filter);
+
+
+        http_response_code(200);
         header("Content-Type: application/json");
         echo json_encode([
-            "status" => 400,
-            "message" => "Bad Request",
-            "payload" => []
+            "status" => 200,
+            "message" => "OK",
+            "payload" => $movies
+        ]);
+    } else if ($_SERVER['PATH_INFO'] == '/actors') {
+
+
+        if (isset($_GET['last_name'])) {
+            $user_input = $_GET['last_name'];
+            $filter = 'last_name';
+        } else if (isset($_GET['name'])) {
+            $user_input = $_GET['name'];
+            $filter = 'name';
+        } else {
+            $user_input = NULL;
+            $filter = 'NULL';
+        }
+
+
+        $actors = get_actors($user_input, $filter);
+
+
+        http_response_code(200);
+        header("Content-Type: application/json");
+        echo json_encode([
+            "status" => 200,
+            "message" => "OK",
+            "payload" => $actors
+        ]);
+    } else if ($_SERVER['PATH_INFO'] == '/directors') {
+
+
+        if (isset($_GET['last_name'])) {
+            $user_input = $_GET['last_name'];
+            $filter = 'last_name';
+        } else if (isset($_GET['name'])) {
+            $user_input = $_GET['name'];
+            $filter = 'name';
+
+        } else {
+            $user_input = NULL;
+            $filter = 'NULL';
+        }
+
+
+        $directors = get_directors($user_input, $filter);
+
+
+        http_response_code(200);
+        header("Content-Type: application/json");
+        echo json_encode([
+            "status" => 200,
+            "message" => "OK",
+            "payload" => $directors
+        ]);
+    } else if ($_SERVER['PATH_INFO'] == '/genres') {
+
+
+        if (isset($_GET['name'])) {
+            $user_input = $_GET['name'];
+            $filter = 'name';
+        } /*else if (isset($_GET['slug'])) {    
+                $user_input = $_GET['slug'];
+            }*/ else {
+            $user_input = NULL;
+            $filter = 'NULL';
+        }
+
+        $genres = get_genres($user_input, $filter);
+
+
+        http_response_code(200);
+        header("Content-Type: application/json");
+        echo json_encode([
+            "status" => 200,
+            "message" => "OK",
+            "payload" => $genres
         ]);
     }
 } else {
