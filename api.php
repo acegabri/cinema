@@ -3,8 +3,7 @@ require_once("connect.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ($_SERVER['PATH_INFO'] == '/movies') {
-        //localhost:8000/api.php/movies
-        //qui estraggo i file
+        
 
         if (isset($_GET['title'])) {
             $user_input = $_GET['title'];
