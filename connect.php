@@ -27,7 +27,7 @@ function fetch_movies_with_actors($query)
 
     while ($row = $result->fetch_assoc()) {
         $movie_id = $row['id'];
-        $actors_query = "SELECT actor.id, actor.first_name, actor.last_name FROM actor JOIN movie_actor ON actor.id = movie_actor.actor_id WHERE movie_actor.movie_id = $movie_id";
+        $actors_query = "SELECT actor.id, actor.first_name, actor.last_name FROM actor JOIN movie_actor ON actor.id = movie_actor.actor_id WHERE movie_actor.movie_id = " . $movie_id;
         $actors_result = execute_query($actors_query);
 
         $actors = array();
@@ -63,7 +63,7 @@ function fetch_actors_with_movies($query)
 
     while ($row = $result->fetch_assoc()) {
         $actor_id = $row['id'];
-        $movies_query = "SELECT movie.id, movie.title, movie.synopsis, movie.duration, movie.released_year FROM movie JOIN movie_actor ON movie.id = movie_actor.movie_id WHERE movie_actor.actor_id = $actor_id";
+        $movies_query = "SELECT movie.id, movie.title, movie.synopsis, movie.duration, movie.released_year FROM movie JOIN movie_actor ON movie.id = movie_actor.movie_id WHERE movie_actor.movie_id = " . $actor_id;
         $movies_result = execute_query($movies_query);
 
         $movies = array();
@@ -101,7 +101,7 @@ function fetch_directors_with_movies($query)
 
     while ($row = $result->fetch_assoc()) {
         $director_id = $row['id'];
-        $movies_query = "SELECT movie.id, movie.title, movie.synopsis, movie.duration, movie.released_year FROM movie JOIN movie_director ON movie.id = movie_director.movie_id WHERE movie_director.director_id = $director_id";
+        $movies_query = "SELECT movie.id, movie.title, movie.synopsis, movie.duration, movie.released_year FROM movie JOIN movie_director ON movie.id = movie_director.movie_id WHERE movie_director.director_id = " . $director_id;
         $movies_result = execute_query($movies_query);
 
         $movies = array();
