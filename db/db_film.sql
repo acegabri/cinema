@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql:3306
--- Creato il: Apr 18, 2024 alle 15:04
+-- Creato il: Mag 02, 2024 alle 07:54
 -- Versione del server: 8.0.36
 -- Versione PHP: 8.2.8
 
@@ -235,65 +235,65 @@ CREATE TABLE `movie_actor` (
 
 INSERT INTO `movie_actor` (`movie_id`, `actor_id`) VALUES
 (1, 1),
-(2, 1),
-(3, 1),
-(4, 1),
-(5, 1),
-(6, 1),
-(7, 1),
-(8, 1),
-(9, 1),
-(10, 1),
-(11, 1),
-(12, 1),
-(13, 1),
-(14, 1),
-(15, 1),
-(16, 1),
-(17, 1),
-(18, 1),
-(19, 1),
-(20, 1),
 (1, 2),
-(2, 2),
-(3, 2),
-(4, 2),
-(5, 2),
-(6, 2),
-(7, 2),
-(8, 2),
-(9, 2),
-(10, 2),
-(11, 2),
-(12, 2),
-(13, 2),
-(14, 2),
-(15, 2),
-(16, 2),
-(17, 2),
-(18, 2),
-(19, 2),
-(20, 2),
 (1, 3),
-(2, 3),
-(3, 3),
-(4, 3),
-(5, 3),
-(6, 3),
-(7, 3),
-(8, 3),
-(9, 3),
-(10, 3),
-(11, 3),
-(12, 3),
-(13, 3),
-(14, 3),
-(15, 3),
-(16, 3),
-(17, 3),
-(18, 3),
-(19, 3),
-(20, 3);
+(2, 4),
+(2, 5),
+(2, 6),
+(3, 7),
+(3, 8),
+(3, 9),
+(4, 10),
+(4, 11),
+(4, 12),
+(5, 13),
+(5, 14),
+(5, 15),
+(6, 16),
+(6, 17),
+(6, 18),
+(7, 19),
+(7, 20),
+(7, 21),
+(8, 22),
+(8, 23),
+(8, 24),
+(9, 25),
+(9, 26),
+(9, 27),
+(10, 28),
+(10, 29),
+(10, 30),
+(11, 31),
+(11, 32),
+(11, 33),
+(12, 34),
+(12, 35),
+(12, 36),
+(13, 37),
+(13, 38),
+(13, 39),
+(14, 40),
+(14, 41),
+(14, 42),
+(15, 43),
+(15, 44),
+(15, 45),
+(16, 46),
+(16, 47),
+(16, 48),
+(17, 49),
+(17, 50),
+(17, 51),
+(18, 52),
+(18, 53),
+(18, 54),
+(19, 55),
+(19, 56),
+(19, 57),
+(20, 58),
+(20, 59),
+(20, 60);
 
 -- --------------------------------------------------------
 
@@ -369,6 +369,32 @@ INSERT INTO `movie_genre` (`movie_id`, `genre_id`) VALUES
 (19, 19),
 (20, 20);
 
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `movie_user`
+--
+
+CREATE TABLE `movie_user` (
+  `user_id` int NOT NULL,
+  `movie_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `users`
+--
+
+CREATE TABLE `users` (
+  `id` int NOT NULL,
+  `first_name` varchar(50) DEFAULT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `registration_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 --
 -- Indici per le tabelle scaricate
 --
@@ -419,6 +445,20 @@ ALTER TABLE `movie_genre`
   ADD KEY `id_genre` (`genre_id`);
 
 --
+-- Indici per le tabelle `movie_user`
+--
+ALTER TABLE `movie_user`
+  ADD PRIMARY KEY (`user_id`,`movie_id`),
+  ADD KEY `movie_id` (`movie_id`);
+
+--
+-- Indici per le tabelle `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- AUTO_INCREMENT per le tabelle scaricate
 --
 
@@ -447,6 +487,12 @@ ALTER TABLE `movie`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
+-- AUTO_INCREMENT per la tabella `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- Limiti per le tabelle scaricate
 --
 
@@ -470,6 +516,13 @@ ALTER TABLE `movie_director`
 ALTER TABLE `movie_genre`
   ADD CONSTRAINT `movie_genre_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`),
   ADD CONSTRAINT `movie_genre_ibfk_2` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`id`);
+
+--
+-- Limiti per la tabella `movie_user`
+--
+ALTER TABLE `movie_user`
+  ADD CONSTRAINT `movie_user_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `movie_user_ibfk_2` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
