@@ -66,7 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         } else if (isset($_GET['name'])) {
             $user_input = $_GET['name'];
             $filter = 'name';
-
         } else {
             $user_input = NULL;
             $filter = 'NULL';
@@ -104,8 +103,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             "message" => "OK",
             "payload" => $genres
         ]);
-    }
+    } else if ($_SERVER['PATH_INFO'] == '/') {
+        http_response_code(404);
+        header("Content-Type: application/json");
+        echo json_encode([
+            "status" => 404,
+            "message" => "Resource not found",
+            "payload" => []
+        ]);
+    }   
+    
 } else {
+
     http_response_code(405);
     header("Content-Type: application/json");
     echo json_encode([
