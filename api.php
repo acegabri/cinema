@@ -1,12 +1,6 @@
 <?php
 require_once("connect.php");
 
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
-
-// Inizializza l'ambiente Twig
-$loader = new FilesystemLoader(__DIR__ . '/templates');
-$twig = new Environment($loader);
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ($_SERVER['PATH_INFO'] == '/movies') {
@@ -30,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
         $movies = get_movies($user_input, $filter);
 
-        echo $twig->render('movies.twig', ['movies' => $movies]);
 
         http_response_code(200);
         header("Content-Type: application/json");
