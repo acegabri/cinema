@@ -3,7 +3,6 @@ require_once("connect.php");
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ($_SERVER['PATH_INFO'] == '/movies') {
-        
 
         if (isset($_GET['title'])) {
             $user_input = $_GET['title'];

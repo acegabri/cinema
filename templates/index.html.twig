@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+{% block main_content %}
+<h1>Titolo -> {{ test }}</h1>
+
+	<div>
+		{% for n in prova_arr %}
+			<div class="num">
+				{{ n }}<br />
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}
