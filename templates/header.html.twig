@@ -1,9 +1,0 @@
-<nav>
-	<ul>
-		{% for item in menu %}
-			<li>
-				<a class="{% if item.active %}currentPage{% endif %}" href="{{ item.href }}">{{ item.text }}</a>
-			</li>
-		{% endfor %}
-	</ul>
-</nav>

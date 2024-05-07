@@ -1,12 +1,31 @@
-{% extends "base.html.twig" %}
-{% block main_content %}
-<h1>Titolo -> {{ test }}</h1>
-
-	<div>
-		{% for n in prova_arr %}
-			<div class="num">
-				{{ n }}<br />
-			</div>
-		{% endfor %}
-	</div>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies</title>
+</head>
+<body>
+    <h1>Elenco dei film</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Synopsis</th>
+                <th>Duration</th>
+                <th>Released Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for movie in movies %}
+            <tr>
+                <td>{{ movie.title }}</td>
+                <td>{{ movie.synopsis }}</td>
+                <td>{{ movie.duration }}</td>
+                <td>{{ movie.released_year }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
