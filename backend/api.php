@@ -1,10 +1,29 @@
+
+
+
+// Gestisci la richiesta
+
+
 <?php
 require_once("connect.php");
+require_once("../vendor/autoload.php"); // Includi l'autoloader di Composer
 
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
+// Inizializza l'ambiente Twig
+$loader = new FilesystemLoader(__DIR__ . '/templates');
+$twig = new Environment($loader);
+
+// Recupera il percorso richiesto dalla richiesta
+$pathInfo = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
+if (empty($pathInfo)) {
+    $pathInfo = isset($_SERVER['REQUEST_URI']) ? parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) : '';
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if ($_SERVER['PATH_INFO'] == '/movies') {
-
+    if ($pathInfo == '/movies') {
+        
         if (isset($_GET['title'])) {
             $user_input = $_GET['title'];
             $filter = 'title';
@@ -23,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
 
         $movies = get_movies($user_input, $filter);
-
+        echo $twig->render('movies.twig', ['movies' => $movies]);
 
         http_response_code(200);
         header("Content-Type: application/json");
@@ -32,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             "message" => "OK",
             "payload" => $movies
         ]);
-    } else if ($_SERVER['PATH_INFO'] == '/actors') {
+    } else if ($pathInfo == '/actors') {
 
 
         if (isset($_GET['last_name'])) {
@@ -48,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 
         $actors = get_actors($user_input, $filter);
-
+        echo $twig->render('actors.twig', ['actors' => $actors]);
 
         http_response_code(200);
         header("Content-Type: application/json");
@@ -57,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             "message" => "OK",
             "payload" => $actors
         ]);
-    } else if ($_SERVER['PATH_INFO'] == '/directors') {
+    } else if ($pathInfo == '/directors') {
 
 
         if (isset($_GET['last_name'])) {
@@ -73,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 
         $directors = get_directors($user_input, $filter);
-
+        echo $twig->render('directors.twig', ['directors' => $directors]);
 
         http_response_code(200);
         header("Content-Type: application/json");
@@ -82,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             "message" => "OK",
             "payload" => $directors
         ]);
-    } else if ($_SERVER['PATH_INFO'] == '/genres') {
+    } else if ($pathInfo == '/genres') {
 
 
         if (isset($_GET['name'])) {
@@ -94,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
 
         $genres = get_genres($user_input, $filter);
-
+        echo $twig->render('genres.twig', ['genres' => $genres]);
 
         http_response_code(200);
         header("Content-Type: application/json");
@@ -103,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             "message" => "OK",
             "payload" => $genres
         ]);
-    } else if ($_SERVER['PATH_INFO'] == '/') {
+    } else if ($pathInfo == '/') {
         http_response_code(404);
         header("Content-Type: application/json");
         echo json_encode([
