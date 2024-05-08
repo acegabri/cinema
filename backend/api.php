@@ -1,9 +1,3 @@
-
-
-
-// Gestisci la richiesta
-
-
 <?php
 require_once("connect.php");
 require_once("../vendor/autoload.php"); // Includi l'autoloader di Composer
@@ -12,10 +6,9 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 // Inizializza l'ambiente Twig
-$loader = new FilesystemLoader(__DIR__ . '/templates');
+$loader = new FilesystemLoader(__DIR__ . '/../templates');
 $twig = new Environment($loader);
 
-// Recupera il percorso richiesto dalla richiesta
 $pathInfo = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
 if (empty($pathInfo)) {
     $pathInfo = isset($_SERVER['REQUEST_URI']) ? parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) : '';
@@ -23,7 +16,7 @@ if (empty($pathInfo)) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if ($pathInfo == '/movies') {
-        
+
         if (isset($_GET['title'])) {
             $user_input = $_GET['title'];
             $filter = 'title';
@@ -42,15 +35,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
 
         $movies = get_movies($user_input, $filter);
-        echo $twig->render('movies.twig', ['movies' => $movies]);
+        echo $twig->render('movies.html.twig', ['movies' => $movies]);
 
-        http_response_code(200);
+        /*http_response_code(200);
         header("Content-Type: application/json");
         echo json_encode([
             "status" => 200,
             "message" => "OK",
             "payload" => $movies
-        ]);
+        ]);*/
     } else if ($pathInfo == '/actors') {
 
 
@@ -130,8 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             "message" => "Resource not found",
             "payload" => []
         ]);
-    }   
-    
+    }
 } else {
 
     http_response_code(405);
