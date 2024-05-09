@@ -46,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         ]);*/
     } else if ($pathInfo == '/actors') {
 
-
         if (isset($_GET['last_name'])) {
             $user_input = $_GET['last_name'];
             $filter = 'last_name';
