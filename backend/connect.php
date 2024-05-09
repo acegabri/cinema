@@ -1,5 +1,5 @@
 <?php
-require_once("connect.php");
+//require_once("connect.php");
 
 function execute_query($query)
 {
@@ -69,7 +69,6 @@ function fetch_movies_with_actors($query)
                 "name" => $genresRow['name']
             ];
         }
-
 
         $row['directors'] = $directors;
         $row['actors'] = $actors;
