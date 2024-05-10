@@ -27,26 +27,26 @@ function build_matrix($movies, $users)
     return $matrix;
 }
 
-function cosine_similarity($a, $b)
+function cosine_similarity($vectore_user1, $vector_user2) // anche detta distanza
 {
     $dot_product = 0; //prodotto scalare
-    $magnitude1 = 0; //lungezza del vettore
-    $magnitude2 = 0;
+    $denominatore1 = 0; 
+    $denominatore2 = 0;
 
     // Calcolare il prodotto scalare e le magnitudini dei vettori
-    foreach ($a as $key => $value) {
-        $dot_product += $value * $b[$key];
-        $magnitude1 += $value * $value;
-        $magnitude2 += $b[$key] * $b[$key];
+    foreach ($vectore_user1 as $key => $value) {
+        $dot_product += $value * $vector_user2[$key];
+        $denominatore1 += $value * $value;
+        $denominatore2 += $vector_user2[$key] * $vector_user2[$key];
     }
 
     // Calcolare le magnitudini dei vettori
-    $magnitude1 = sqrt($magnitude1);
-    $magnitude2 = sqrt($magnitude2);
+    $denominatore1 = sqrt($denominatore1);
+    $denominatore2 = sqrt($denominatore2);
 
     // Calcolare la similarità coseno
-    if ($magnitude1 != 0 && $magnitude2 != 0) {
-        $similarity = $dot_product / ($magnitude1 * $magnitude2);
+    if ($denominatore1 != 0 && $denominatore2 != 0) {
+        $similarity = $dot_product / ($denominatore1 * $denominatore2);
     } else {
         $similarity = 0;
     }
