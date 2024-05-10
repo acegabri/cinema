@@ -7,26 +7,38 @@ require_once '../vendor/autoload.php'; // Carica l'autoloader di Twig
 $loader = new \Twig\Loader\FilesystemLoader('../templates'); // Imposta il percorso della cartella dei template
 $twig = new \Twig\Environment($loader); // Inizializza l'ambiente Twig
 
-$first_name = $_POST['first_name'];
-$last_name = $_POST['last_name'];
-$password = $_POST['password'];
-
-$query = "SELECT id FROM users WHERE password = ?";
-
-// Connessione al database
-$mysqli = new mysqli("mysql", "root", "root", "db_film");
-
-$stmt = $mysqli->prepare($query);
-$stmt->bind_param("s", $password);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result) {
-    $_SESSION['id'] = $result;
-
-    header('Location: ../index.html');
+if (isset($_SESSION['email'])) {
+    header('Location: ../templates/index.html.twig');
 } else {
-    echo "errore in fase di accesso";
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $conn = mysqli_connect("mysql", "root", "root", "db_film");
+
+        if (!$conn) {
+            die('Connection failed: ' . mysqli_connect_error());
+        }
+
+        $query = "SELECT * FROM users WHERE email like '$email' AND password like  '$password'";
+        $result = mysqli_query($conn, $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            echo $row;
+            assign_sess_values($row);
+            header('Location: ../templates/index.html.twig');
+        } else {
+            echo "email or password incorrect!";
+        }
+    }
+}
+
+function assign_sess_values($row)
+{
+    $_SESSION['id'] = $row['id'];
+    $_SESSION['email'] = $row['email'];
 }
 
 exit();
