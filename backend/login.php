@@ -3,9 +3,9 @@
 session_start();
 
 require_once('connect.php');
-require_once '../vendor/autoload.php'; // Carica l'autoloader di Twig
-$loader = new \Twig\Loader\FilesystemLoader('../templates'); // Imposta il percorso della cartella dei template
-$twig = new \Twig\Environment($loader); // Inizializza l'ambiente Twig
+require_once '../vendor/autoload.php';
+$loader = new \Twig\Loader\FilesystemLoader('../templates'); 
+$twig = new \Twig\Environment($loader);
 
 if (isset($_SESSION['email'])) {
     header('Location: ../templates/index.html.twig');

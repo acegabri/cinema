@@ -1,11 +1,12 @@
 <?php
+
+session_start();
 require_once("connect.php");
-require_once("../vendor/autoload.php"); // Includi l'autoloader di Composer
+require_once("../vendor/autoload.php");
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-// Inizializza l'ambiente Twig
 $loader = new FilesystemLoader(__DIR__ . '/../templates');
 $twig = new Environment($loader);
 
