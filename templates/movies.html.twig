@@ -7,11 +7,58 @@
 	</head>
 	<body>
 		<h1>Elenco dei film</h1>
+
+		<form method="GET">
+			<input type="text" name="title" placeholder="Search" required>
+			<input type="submit" value="search a movie">
+		</form>
+
 		<ul>
 			{% for movie in movies %}
-				<li>{{ movie.title }}
-					-
-					{{ movie.released_year }}</li>
+				<li>
+					<h2>{{ movie.title }}</h2>
+					<img src="{{ movie.poster }}" alt="{{ movie.title }}" width="150px" height="150px">
+					<p>release date:
+						{{ movie.released_year }}</p>
+					<p>movie synopsis:
+						{{ movie.synopsis }}</p>
+					<p>movie duration:
+						{{ movie.duration }}
+						minutes
+					</p>
+
+					<h3>Genre</h3>
+
+					<ul>
+						{% for genres in movie.genres %}
+							<li>
+								{{ genres.name }}
+							</li>
+						{% endfor %}
+					</ul>
+
+					<h3>Actors</h3>
+
+					<ul>
+						{% for actors in movie.actors %}
+							<li>
+								{{ actors.first_name }}
+								{{ actors.last_name }}
+							</li>
+						{% endfor %}
+					</ul>
+
+					<h3>Directors</h3>
+
+					<ul>
+						{% for directors in movie.directors %}
+							<li>
+								{{ directors.first_name }}
+								{{ directors.last_name }}
+							</li>
+						{% endfor %}
+					</ul>
+				</li>
 			{% endfor %}
 		</ul>
 	</body>

@@ -27,14 +27,14 @@ function build_matrix($movies, $users)
     return $matrix;
 }
 
-function cosine_similarity($vectore_user1, $vector_user2) // anche detta distanza
+function cosine_similarity($vector_user1, $vector_user2) // anche detta distanza
 {
     $dot_product = 0; //prodotto scalare
     $denominatore1 = 0; 
     $denominatore2 = 0;
 
     // Calcolare il prodotto scalare e le magnitudini dei vettori
-    foreach ($vectore_user1 as $key => $value) {
+    foreach ($vector_user1 as $key => $value) {
         $dot_product += $value * $vector_user2[$key];
         $denominatore1 += $value * $value;
         $denominatore2 += $vector_user2[$key] * $vector_user2[$key];
@@ -85,7 +85,7 @@ function get_movie($user_a, $user_b)
 }
 
 
-// Ottenere la matrice delle valutazioni degli utenti per i film
+// Esempio di utilizzo delle funzioni sopra definite
 /*$movies = array();
 $users = array();
 $matrix = build_matrix($movies, $users);

@@ -15,8 +15,10 @@ if (empty($pathInfo)) {
     $pathInfo = isset($_SERVER['REQUEST_URI']) ? parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) : '';
 }
 
+// echo $pathInfo;
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if ($pathInfo == '/movies') {
+    if ($pathInfo == '/movies') { 
 
         if (isset($_GET['title'])) {
             $user_input = $_GET['title'];
