@@ -4,6 +4,15 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Movies</title>
+
+		<style>
+		
+			body{
+
+				font-family: "Times New Roman", serif;
+			}
+		
+		</style>
 	</head>
 	<body>
 		<h1>Elenco dei film</h1>
@@ -16,13 +25,13 @@
 		<ul>
 			{% for movie in movies %}
 				<li>
-					<h2>{{ movie.title }}</h2>
+					<h3>{{ movie.title }}</h3>
 					<img src="{{ movie.poster }}" alt="{{ movie.title }}" width="150px" height="150px">
-					<p>release date:
+					<p>Release date:
 						{{ movie.released_year }}</p>
-					<p>movie synopsis:
+					<p>Movie synopsis:
 						{{ movie.synopsis }}</p>
-					<p>movie duration:
+					<p>Movie duration:
 						{{ movie.duration }}
 						minutes
 					</p>
@@ -61,6 +70,8 @@
 				</li>
 			{% endfor %}
 		</ul>
+
+		<a href="api.php/movies">pagina film</a>
 	</body>
 </html>
 
