@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
 
         $movies = get_movies($user_input, $filter);
-        
+
         echo $twig->render('movies.html.twig', ['movies' => $movies]);
 
 
@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             "message" => "OK",
             "payload" => $movies
         ]);*/
-    } else if ($pathInfo == '/actors') {
+    } else if ($pathInfo == '/actors.html.twig') {
 
         if (isset($_GET['last_name'])) {
             $user_input = $_GET['last_name'];
@@ -64,16 +64,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 
         $actors = get_actors($user_input, $filter);
-        echo $twig->render('actors.twig', ['actors' => $actors]);
+        echo $twig->render('actors.html.twig', ['actors' => $actors]);
 
-        http_response_code(200);
+        /*http_response_code(200);
         header("Content-Type: application/json");
         echo json_encode([
             "status" => 200,
             "message" => "OK",
             "payload" => $actors
-        ]);
-    } else if ($pathInfo == '/directors') {
+        ]);*/
+    } else if ($pathInfo == '/directors.html.twig') {
 
 
         if (isset($_GET['last_name'])) {
@@ -89,16 +89,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 
         $directors = get_directors($user_input, $filter);
-        echo $twig->render('directors.twig', ['directors' => $directors]);
+        echo $twig->render('directors.html.twig', ['directors' => $directors]);
 
-        http_response_code(200);
+        /*http_response_code(200);
         header("Content-Type: application/json");
         echo json_encode([
             "status" => 200,
             "message" => "OK",
             "payload" => $directors
-        ]);
-    } else if ($pathInfo == '/genres') {
+        ]);*/
+    } else if ($pathInfo == '/genres.html.twig') {
 
 
         if (isset($_GET['name'])) {
@@ -110,18 +110,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
 
         $genres = get_genres($user_input, $filter);
-        echo $twig->render('genres.twig', ['genres' => $genres]);
+        echo $twig->render('genres.html.twig', ['genres' => $genres]);
 
-        http_response_code(200);
+        /*http_response_code(200);
         header("Content-Type: application/json");
         echo json_encode([
             "status" => 200,
             "message" => "OK",
             "payload" => $genres
-        ]);
-    } else if ($pathInfo == '/' || $pathInfo == '') {
+        ]);*/
+    } else if ($pathInfo == '/' or $pathInfo == '') {
 
         echo $twig->render('index.html.twig');
+    } else if ($pathInfo == "/accesso.html.twig") {
+
+        echo $twig->render('accesso.html.twig');
+    } else if ($pathInfo == "/registrazione.html.twig") {
+
+        echo $twig->render('registrazione.html.twig');
     }
 } else {
 
@@ -134,6 +140,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     ]);
 }
 
-
-
 exit;
+
+/*
+
+api.php è l'entry point principale della pagina.
+il resto dovrà essere renderizzato in base al path info che varia in base alla richiesta GET.
+Se il path info è vuoto, verrà renderizzata la pagina principale, quindi index.html.twig.
+nel caso in cui il path info sia /movies.html.twig, verrà renderizzata la pagina dei film.
+così via per il resto delle pagine.
+
+esempio di richiesta per i film:
+http://localhost:9000/backend/api.php/movies.html.twig?title=jur
+
+*/
