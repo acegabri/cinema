@@ -8,7 +8,7 @@ $loader = new \Twig\Loader\FilesystemLoader('../templates');
 $twig = new \Twig\Environment($loader);
 
 if (isset($_SESSION['email'])) {
-    header('Location: ../templates/index.html.twig');
+    header('Location: api.php/');
 } else {
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -28,7 +28,7 @@ if (isset($_SESSION['email'])) {
             $row = mysqli_fetch_assoc($result);
             echo $row;
             assign_sess_values($row);
-            header('Location: ../templates/index.html.twig');
+            header('Location: api.php/');
         } else {
             echo "email or password incorrect!";
         }

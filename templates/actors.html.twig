@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Movies</title>
+
+		<style>
+
+			body {
+				font-family: "Times New Roman", serif;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Elenco degli attori</h1>
+
+		<form method="GET">
+			<input type="text" name="last_name" placeholder="Search" required>
+			<input type="submit" value="search for a movie">
+		</form>
+
+		<ul>
+			{% for actor in actors %}
+				<li>
+					<h3>{{ actor.first_name }}
+						{{ actor.last_name }}
+					</h3>
+
+					<ul>
+						{% for movies in actor.movies %}
+							<li>
+								<p>Film title:
+									{{ movies.title }}</p>
+								<p>Release date:
+									{{ movies.released_year }}</p>
+								<p>Movie synopsis:
+									{{ movies.synopsis }}</p>
+								<p>Movie duration:
+									{{ movies.duration }}
+									minutes
+								</p>
+							</li>
+						{% endfor %}
+
+					</ul>
+				</li>
+			{% endfor %}
+		</ul>
+
+		<a href="../api.php/actors.html.twig">Tutti gli attori</a>
+		<br>
+		<a href="../api.php/">Home page</a>
+	</body>
+</html>
+
+<!-- per fare si che si veda il risultato il path deve avere da api.php/movies -->
