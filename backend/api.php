@@ -18,7 +18,7 @@ if (empty($pathInfo)) {
 // echo $pathInfo;
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if ($pathInfo == '/movies') { 
+    if ($pathInfo == '/movies.html.twig') {
 
         if (isset($_GET['title'])) {
             $user_input = $_GET['title'];
@@ -38,7 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         }
 
         $movies = get_movies($user_input, $filter);
+        
         echo $twig->render('movies.html.twig', ['movies' => $movies]);
+
 
         /*http_response_code(200);
         header("Content-Type: application/json");
@@ -117,14 +119,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             "message" => "OK",
             "payload" => $genres
         ]);
-    } else if ($pathInfo == '/') {
-        http_response_code(404);
-        header("Content-Type: application/json");
-        echo json_encode([
-            "status" => 404,
-            "message" => "Resource not found",
-            "payload" => []
-        ]);
+    } else if ($pathInfo == '/' || $pathInfo == '') {
+
+        echo $twig->render('index.html.twig');
     }
 } else {
 
@@ -138,6 +135,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 }
 
 
-echo $twig->render('index.html.twig');
 
 exit;
