@@ -4,77 +4,92 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Movies</title>
+		<!-- Bootstrap CSS -->
+		<link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
 
 		<style>
-		
-			body{
-
+			body {
 				font-family: "Times New Roman", serif;
+				padding: 20px;
 			}
-		
+
+			.search-form {
+				margin-bottom: 20px;
+			}
+
+			ul {
+				list-style: none;
+				padding-left: 0;
+			}
+
+			ul li {
+				margin-bottom: 20px;
+			}
+
+			ul li img {
+				margin-right: 10px;
+			}
 		</style>
 	</head>
 	<body>
-		<h1>Elenco dei film</h1>
+		<div class="container">
+			<h1>Elenco dei film</h1>
 
-		<form method="GET">
-			<input type="text" name="title" placeholder="Search" required>
-			<input type="submit" value="search for a movie">
-		</form>
+			<form method="GET" class="search-form">
+				<div class="input-group">
+					<input type="text" name="title" class="form-control" placeholder="Search" required>
+					<div class="input-group-append">
+						<button type="submit" class="btn btn-primary">Search for a movie</button>
+					</div>
+				</div>
+			</form>
 
-		<ul>
-			{% for movie in movies %}
-				<li>
-					<h3>{{ movie.title }}</h3>
-					<img src="{{ movie.poster }}" alt="{{ movie.title }}" width="150px" height="150px">
-					<p>Release date:
-						{{ movie.released_year }}</p>
-					<p>Movie synopsis:
-						{{ movie.synopsis }}</p>
-					<p>Movie duration:
-						{{ movie.duration }}
-						minutes
-					</p>
+			<ul>
+				{% for movie in movies %}
+					<li>
+						<h3>{{ movie.title }}</h3>
+						<img src="{{ movie.poster }}" alt="{{ movie.title }}" width="150px" height="150px">
+						<p>
+							<strong>Release date:</strong>
+							{{ movie.released_year }}</p>
+						<p>
+							<strong>Movie synopsis:</strong>
+							{{ movie.synopsis }}</p>
+						<p>
+							<strong>Movie duration:</strong>
+							{{ movie.duration }}
+							minutes</p>
 
-					<h3>Genre</h3>
+						<h3>Genre</h3>
+						<ul>
+							{% for genre in movie.genres %}
+								<li>{{ genre.name }}</li>
+							{% endfor %}
+						</ul>
 
-					<ul>
-						{% for genres in movie.genres %}
-							<li>
-								{{ genres.name }}
-							</li>
-						{% endfor %}
-					</ul>
+						<h3>Actors</h3>
+						<ul>
+							{% for actor in movie.actors %}
+								<li>{{ actor.first_name }}
+									{{ actor.last_name }}</li>
+							{% endfor %}
+						</ul>
 
-					<h3>Actors</h3>
+						<h3>Directors</h3>
+						<ul>
+							{% for director in movie.directors %}
+								<li>{{ director.first_name }}
+									{{ director.last_name }}</li>
+							{% endfor %}
+						</ul>
+					</li>
+				{% endfor %}
+			</ul>
 
-					<ul>
-						{% for actors in movie.actors %}
-							<li>
-								{{ actors.first_name }}
-								{{ actors.last_name }}
-							</li>
-						{% endfor %}
-					</ul>
+			<a href="../api.php/movies.html.twig" class="btn btn-secondary">Tutti i film</a>
+			<a href="../api.php/" class="btn btn-primary">Home page</a>
+		</div>
 
-					<h3>Directors</h3>
-
-					<ul>
-						{% for directors in movie.directors %}
-							<li>
-								{{ directors.first_name }}
-								{{ directors.last_name }}
-							</li>
-						{% endfor %}
-					</ul>
-				</li>
-			{% endfor %}
-		</ul>
-
-		<a href="../api.php/movies.html.twig">Tutti i film</a>
-		<br>
-		<a href="../api.php/">Home page</a>
+		<script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	</body>
 </html>
-
-<!-- per fare si che si veda il risultato il path deve avere da api.php/movies -->

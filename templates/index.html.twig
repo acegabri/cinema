@@ -4,45 +4,78 @@
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<title>Home page</title>
+		<!-- Bootstrap CSS -->
 		<link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				padding: 20px;
+
+			}
+
+			div.hero {
+				background-image: url('https://images.pexels.com/photos/918281/pexels-photo-918281.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+				background-size: cover;
+				background-position: center;
+				height: 90vh;
+
+			}
+
+			nav ul {
+				list-style: none;
+				padding: 0;
+
+			}
+
+			nav ul li {
+				display: inline-block;
+				margin-right: 10px;
+
+			}
+
+			a {
+				color: white !important;
+				text-decoration: none;
+			}
+		</style>
 	</head>
 	<body>
-		<nav>
-			<ul>
-				<li>
-					<a href="movies.html.twig">Film</a>
-				</li>
-				<li>
-					<a href="actors.html.twig">Attori</a>
-				</li>
-				<li>
-					<a href="directors.html.twig">Registi</a>
-				</li>
-				<li>
-					<a href="genres.html.twig">Generi</a>
-				</li>
-
-
-				{% if user is defined %}
-					<li>
-						<a href="suggerimenti.html.twig">Suggerimenti</a>
+		<div class="hero">
+			<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="movies.html.twig">Film</a>
 					</li>
-					<li>
-						<a href="../logout.php">Logout</a>
+					<li class="nav-item">
+						<a class="nav-link" href="actors.html.twig">Attori</a>
 					</li>
-				{% else %}
-					<li>
-						<a href="registrazione.html.twig">Registrati</a>
+					<li class="nav-item">
+						<a class="nav-link" href="directors.html.twig">Registi</a>
 					</li>
-
-					<li>
-						<a href="accesso.html.twig">Accedi</a>
+					<li class="nav-item">
+						<a class="nav-link" href="genres.html.twig">Generi</a>
 					</li>
-				{% endif %}
-
-			</ul>
-		</nav>
-
+				</ul>
+				<ul class="navbar-nav ml-auto">
+					{% if user is defined %}
+						<li class="nav-item">
+							<a class="nav-link" href="suggerimenti.html.twig">Suggerimenti</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="../logout.php">Logout</a>
+						</li>
+					{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href="registrazione.html.twig">Registrati</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="accesso.html.twig">Accedi</a>
+						</li>
+					{% endif %}
+				</ul>
+			</nav>
+		</div>
 		<script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	</body>
 </html>
