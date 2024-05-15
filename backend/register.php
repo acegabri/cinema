@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result = mysqli_query($conn, $query);
 
     if ($result) {
+        $user = true;
         echo "User created successfully!";
         echo "<a href='../templates/index.html.twig'>home page</a>";
     } else {

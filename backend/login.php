@@ -30,6 +30,7 @@ if (isset($_SESSION['email'])) {
         $result = mysqli_query($conn, $query);
 
         if (mysqli_num_rows($result) > 0) {
+            $user = true;
             $row = mysqli_fetch_assoc($result);
             echo $row;
             assign_sess_values($row);

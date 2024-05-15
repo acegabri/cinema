@@ -2,6 +2,7 @@
 
 session_start();
 require_once("connect.php");
+require_once("utils.php");
 require_once("../vendor/autoload.php");
 
 use Twig\Environment;
@@ -123,15 +124,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     } else if ($pathInfo == "/registrazione.html.twig") {
 
         echo $twig->render('registrazione.html.twig');
+    } else if ($pathInfo == "/suggerimenti.html.twig") {
+
+        $matrice = build_matrix();
+        http_response_code(200);
+        header("Content-Type: application/json");
+        echo json_encode([
+            "status" => 200,
+            "message" => "OK",
+            "payload" => $matrice
+        ]);
     } else {
 
         http_response_code(404);
-    header("Content-Type: application/json");
-    echo json_encode([
-        "status" => 404,
-        "message" => "Page not found",
-        "payload" => []
-    ]);
+        header("Content-Type: application/json");
+        echo json_encode([
+            "status" => 404,
+            "message" => "Page not found",
+            "payload" => []
+        ]);
     }
 } else {
 

@@ -1,34 +1,41 @@
 <?php
 
-session_start();
+//session_start();
 
 require_once('connect.php');
 require_once('api.php');
 
-function build_matrix($movies, $users)
+function build_matrix()
 {
+    $query = "SELECT * FROM users";
+    $users = execute_query($query);
+
+    $query = "SELECT * FROM movie";
+    $movies = execute_query($query);
+
     $matrix = array();
 
-    // Creare una matrice che rappresenta le valutazioni dei film da parte degli utenti
     foreach ($users as $user) {
-
         $user_id = $user['id'];
         $matrix[$user_id] = array();
         foreach ($movies as $movie) {
             $movie_id = $movie['id'];
 
-            // Query per ottenere la valutazione dell'utente per il film dal database
-            // Assumendo una tabella user_movie con campi user_id, movie_id e rating
-            // Qui dovresti implementare la query per ottenere il rating dell'utente per il film
+            $query = "SELECT rating FROM movie_user WHERE user_id = $user_id AND movie_id = $movie_id";
+            $query_result = execute_query($query);
 
-            
+            if ($query_result->num_rows > 0) {
+                $rating = $query_result->fetch_assoc()['rating'];
+            } else {
+                $rating = null;
+            }
 
-            $rating = null;
             $matrix[$user_id][$movie_id] = $rating;
         }
     }
 
     return $matrix;
+
 }
 
 function cosine_similarity($a, $b) // anche detta distanza
