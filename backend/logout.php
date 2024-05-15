@@ -3,5 +3,5 @@ session_start();
 session_unset(); 
 session_destroy(); 
 
-header('Location: ../templates/accesso.html.twig');
+header('Location: ../backend/api.php/accesso.html.twig');
 exit();

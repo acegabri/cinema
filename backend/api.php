@@ -42,13 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
         echo $twig->render('movies.html.twig', ['movies' => $movies]);
 
-        /*http_response_code(200);
-        header("Content-Type: application/json");
-        echo json_encode([
-            "status" => 200,
-            "message" => "OK",
-            "payload" => $movies
-        ]);*/
     } else if ($pathInfo == '/actors.html.twig') {
 
         if (isset($_GET['last_name'])) {
@@ -65,13 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $actors = get_actors($user_input, $filter);
         echo $twig->render('actors.html.twig', ['actors' => $actors]);
 
-        /*http_response_code(200);
-        header("Content-Type: application/json");
-        echo json_encode([
-            "status" => 200,
-            "message" => "OK",
-            "payload" => $actors
-        ]);*/
     } else if ($pathInfo == '/directors.html.twig') {
 
         if (isset($_GET['last_name'])) {
@@ -88,13 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $directors = get_directors($user_input, $filter);
         echo $twig->render('directors.html.twig', ['directors' => $directors]);
 
-        /*http_response_code(200);
-        header("Content-Type: application/json");
-        echo json_encode([
-            "status" => 200,
-            "message" => "OK",
-            "payload" => $directors
-        ]);*/
     } else if ($pathInfo == '/genres.html.twig') {
 
         if (isset($_GET['name'])) {
@@ -108,16 +87,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $genres = get_genres($user_input, $filter);
         echo $twig->render('genres.html.twig', ['genres' => $genres]);
 
-        /*http_response_code(200);
-        header("Content-Type: application/json");
-        echo json_encode([
-            "status" => 200,
-            "message" => "OK",
-            "payload" => $genres
-        ]);*/
     } else if ($pathInfo == '/' or $pathInfo == '') {
 
-        echo $twig->render('index.html.twig');
+        if (isset($_SESSION['id'])) {
+            $user = true;
+            echo $twig->render('index.html.twig', ['user' => $user]);
+        } else {
+
+            echo $twig->render('index.html.twig');
+        }
     } else if ($pathInfo == "/accesso.html.twig") {
 
         echo $twig->render('accesso.html.twig');

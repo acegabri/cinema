@@ -7,38 +7,57 @@ require_once('api.php');
 
 function build_matrix()
 {
-    $query = "SELECT * FROM users";
-    $users = execute_query($query);
+    // Ottieni tutti gli utenti
+    $query = "SELECT id, first_name, last_name FROM users";
+    $users_result = execute_query($query);
+    $users = [];
+    while ($user = $users_result->fetch_assoc()) {
+        $users[] = $user;
+    }
 
-    $query = "SELECT * FROM movie";
-    $movies = execute_query($query);
+    // Ottieni tutti i film
+    $query = "SELECT id, title FROM movie";
+    $movies_result = execute_query($query);
+    $movies = [];
+    while ($movie = $movies_result->fetch_assoc()) {
+        $movies[] = $movie;
+    }
 
-    $matrix = array();
+    // Inizializza la matrice
+    $matrix = [];
 
+    // Prima riga: prima cella vuota seguita dai nomi dei film
+    $header = [''];
+    foreach ($movies as $movie) {
+        $header[] = $movie['title'];
+    }
+    $matrix[] = $header;
+
+    // Costruisci la matrice con i nomi degli utenti e i rating
     foreach ($users as $user) {
-        $user_id = $user['id'];
-        $matrix[$user_id] = array();
+        $user_row = [$user['first_name'] . ' ' . $user['last_name']];
         foreach ($movies as $movie) {
+            $user_id = $user['id'];
             $movie_id = $movie['id'];
 
+            // Ottieni il rating
             $query = "SELECT rating FROM movie_user WHERE user_id = $user_id AND movie_id = $movie_id";
-            $query_result = execute_query($query);
-
-            if ($query_result->num_rows > 0) {
-                $rating = $query_result->fetch_assoc()['rating'];
+            $rating_result = execute_query($query);
+            if ($rating_result->num_rows > 0) {
+                $rating = $rating_result->fetch_assoc()['rating'];
             } else {
-                $rating = null;
+                $rating = '';
             }
 
-            $matrix[$user_id][$movie_id] = $rating;
+            $user_row[] = $rating;
         }
+        $matrix[] = $user_row;
     }
 
     return $matrix;
-
 }
 
-function cosine_similarity($a, $b) // anche detta distanza
+function cosine_similarity($a, $b)
 {
     $dot_product = 0;
     $denominatore1 = 0;
