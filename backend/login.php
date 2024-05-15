@@ -15,6 +15,11 @@ if (isset($_SESSION['email'])) {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
+        $user = array();
+
+        $user['email'] = $email;
+        $user['password'] = $password;
+
         $conn = mysqli_connect("mysql", "root", "root", "db_film");
 
         if (!$conn) {

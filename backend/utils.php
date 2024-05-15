@@ -16,9 +16,13 @@ function build_matrix($movies, $users)
         $matrix[$user_id] = array();
         foreach ($movies as $movie) {
             $movie_id = $movie['id'];
+
             // Query per ottenere la valutazione dell'utente per il film dal database
             // Assumendo una tabella user_movie con campi user_id, movie_id e rating
             // Qui dovresti implementare la query per ottenere il rating dell'utente per il film
+
+            
+
             $rating = null;
             $matrix[$user_id][$movie_id] = $rating;
         }
@@ -27,28 +31,25 @@ function build_matrix($movies, $users)
     return $matrix;
 }
 
-function cosine_similarity($vector_user1, $vector_user2) // anche detta distanza
+function cosine_similarity($a, $b) // anche detta distanza
 {
-    $dot_product = 0; //prodotto scalare
-    $denominatore1 = 0; 
+    $dot_product = 0;
+    $denominatore1 = 0;
     $denominatore2 = 0;
 
-    // Calcolare il prodotto scalare e le magnitudini dei vettori
-    foreach ($vector_user1 as $key => $value) {
-        $dot_product += $value * $vector_user2[$key];
+    foreach ($a as $key => $value) {
+        $dot_product += $value * $b[$key];
         $denominatore1 += $value * $value;
-        $denominatore2 += $vector_user2[$key] * $vector_user2[$key];
+        $denominatore2 += $b[$key] * $b[$key];
     }
 
-    // Calcolare le magnitudini dei vettori
     $denominatore1 = sqrt($denominatore1);
     $denominatore2 = sqrt($denominatore2);
 
-    // Calcolare la similarità coseno
     if ($denominatore1 != 0 && $denominatore2 != 0) {
         $similarity = $dot_product / ($denominatore1 * $denominatore2);
     } else {
-        $similarity = 0;
+        $similarity = -10;
     }
 
     return $similarity;
