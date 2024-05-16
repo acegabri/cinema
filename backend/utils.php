@@ -1,57 +1,51 @@
 <?php
 
 //session_start();
-
 require_once('connect.php');
 require_once('api.php');
 
 function build_matrix()
 {
-    // Ottieni tutti gli utenti
-    $query = "SELECT id, first_name, last_name FROM users";
-    $users_result = execute_query($query);
-    $users = [];
-    while ($user = $users_result->fetch_assoc()) {
-        $users[] = $user;
+
+    /*GET MOVIES*/
+    $moviesQuery = 'SELECT * FROM movie';
+
+    $moviesResult = execute_query($moviesQuery);
+
+    while ($moviesRow = $moviesResult->fetch_assoc()) {
+        $movies[] = $moviesRow;
     }
 
-    // Ottieni tutti i film
-    $query = "SELECT id, title FROM movie";
-    $movies_result = execute_query($query);
-    $movies = [];
-    while ($movie = $movies_result->fetch_assoc()) {
-        $movies[] = $movie;
+    $usersQuery = 'SELECT * FROM users';
+
+    $usersResult = execute_query($usersQuery);
+
+    while ($usersRow = $usersResult->fetch_assoc()) {
+        $users[] = $usersRow;
     }
 
-    // Inizializza la matrice
-    $matrix = [];
+    $watchFilmsQuery = 'SELECT * FROM movie_user';
 
-    // Prima riga: prima cella vuota seguita dai nomi dei film
-    $header = [''];
-    foreach ($movies as $movie) {
-        $header[] = $movie['title'];
+    $watchFilmsResult = execute_query($watchFilmsQuery);
+
+    while ($watchFilmsRow = $watchFilmsResult->fetch_assoc()) {
+        $watchFilms[] = $watchFilmsRow;
     }
-    $matrix[] = $header;
 
-    // Costruisci la matrice con i nomi degli utenti e i rating
-    foreach ($users as $user) {
-        $user_row = [$user['first_name'] . ' ' . $user['last_name']];
-        foreach ($movies as $movie) {
-            $user_id = $user['id'];
-            $movie_id = $movie['id'];
+    $movieIds = array_column($movies, 'id');
+    $userIds = array_column($users, 'id');
 
-            // Ottieni il rating
-            $query = "SELECT rating FROM movie_user WHERE user_id = $user_id AND movie_id = $movie_id";
-            $rating_result = execute_query($query);
-            if ($rating_result->num_rows > 0) {
-                $rating = $rating_result->fetch_assoc()['rating'];
-            } else {
-                $rating = '';
-            }
+    $movieIndex = array_flip($movieIds);
+    $userIndex = array_flip($userIds);
 
-            $user_row[] = $rating;
-        }
-        $matrix[] = $user_row;
+    $matrix = array_fill(0, count($userIds), array_fill(0, count($movieIds), 0));
+
+    foreach ($watchFilms as $watch) {
+        $userId = $watch['user_id'];
+        $movieId = $watch['movie_id'];
+        $rating = isset($watch['rating']) ? $watch['rating'] : 0;
+
+        $matrix[$userIndex[$userId]][$movieIndex[$movieId]] = $rating;
     }
 
     return $matrix;
@@ -59,26 +53,35 @@ function build_matrix()
 
 function cosine_similarity($a, $b)
 {
-    $dot_product = 0;
-    $denominatore1 = 0;
-    $denominatore2 = 0;
+    $dist = 0;
+    $numeratore = 0;
+    $modulo_a = 0;
+    $modulo_b = 0;
+    $denom = 0;
 
-    foreach ($a as $key => $value) {
-        $dot_product += $value * $b[$key];
-        $denominatore1 += $value * $value;
-        $denominatore2 += $b[$key] * $b[$key];
+    for ($i = 0; $i < $a[$i]; $i++) {
+        $modulo_a = $modulo_a + pow($a[$i], 2);
+        $modulo_b = $modulo_b + pow($b[$i], 2);
     }
+    $modulo_a = sqrt($modulo_a);
+    $modulo_b = sqrt($modulo_b);
 
-    $denominatore1 = sqrt($denominatore1);
-    $denominatore2 = sqrt($denominatore2);
+    $denom = $modulo_a * $modulo_b;
 
-    if ($denominatore1 != 0 && $denominatore2 != 0) {
-        $similarity = $dot_product / ($denominatore1 * $denominatore2);
+    if ($denom == 0) {
+        return null;
     } else {
-        $similarity = -10;
-    }
+        for ($i = 0; $i < $a[$i]; $i++) {
+            $prodotto = $a[$i] * $b[$i];
 
-    return $similarity;
+            $numeratore = $numeratore + $prodotto;
+        }
+
+        $dist = $numeratore / $denom;
+        echo $dist;
+
+        return $dist;
+    }
 }
 
 function find_user($matrix, $user_id)
