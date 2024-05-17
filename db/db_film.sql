@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql:3306
--- Creato il: Mag 02, 2024 alle 07:54
--- Versione del server: 8.0.36
+-- Creato il: Mag 17, 2024 alle 11:39
+-- Versione del server: 8.0.37
 -- Versione PHP: 8.2.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -122,9 +122,9 @@ INSERT INTO `director` (`id`, `first_name`, `last_name`, `birthday_date`) VALUES
 (2, 'Steven', 'Spielberg', '1946-12-18'),
 (3, 'John', 'G. Avildsen', '1935-12-21'),
 (4, 'Ridley', 'Scott', '1937-11-30'),
-(5, 'D.J.', 'Caruso', NULL),
-(6, 'Joe', 'Pytka', NULL),
-(7, 'Jan', 'de Bont', NULL),
+(5, 'D.J.', 'Caruso', '1960-05-01'),
+(6, 'Joe', 'Pytka', '1964-07-19'),
+(7, 'Jan', 'de Bont', '1970-09-06'),
 (8, 'Kathryn', 'Bigelow', '1951-11-27'),
 (9, 'Joel', 'Schumacher', '1939-08-29'),
 (10, 'John', 'McTiernan', '1951-01-08'),
@@ -197,26 +197,26 @@ CREATE TABLE `movie` (
 --
 
 INSERT INTO `movie` (`id`, `synopsis`, `title`, `duration`, `released_year`, `poster`) VALUES
-(1, 'Una storia romantica ambientata nell\'inverno del 1995 a Parigi.', 'Before Sunrise', 105, '1995-01-27', NULL),
-(2, 'Un gruppo di dinosauri scappa da un parco a tema.', 'Jurassic Park', 127, '1993-06-11', NULL),
-(3, 'Un ragazzo si ritrova coinvolto in un torneo di arti marziali.', 'Karate Kid', 126, '1984-06-22', NULL),
-(4, 'Un gruppo di amici intraprende un viaggio attraverso il deserto americano.', 'Thelma & Louise', 130, '1991-05-24', NULL),
-(5, 'Un uomo comincia a sospettare che il suo vicino sia un serial killer.', 'Disturbia', 105, '2007-04-13', NULL),
-(6, 'Una squadra di basket affronta sfide sia sul campo che fuori.', 'Space Jam', 88, '1996-11-15', NULL),
-(7, 'Un uomo tenta di fermare un treno carico di esplosivi.', 'Speed', 116, '1994-06-10', NULL),
-(8, 'Un poliziotto di Los Angeles combatte contro una banda di ladri di auto.', 'Point Break', 122, '1991-07-12', NULL),
-(9, 'Un adolescente si imbatte in un gruppo di giovani vampiri.', 'The Lost Boys', 97, '1987-07-31', NULL),
-(10, 'Un ex poliziotto sconfigge i terroristi in un grattacielo.', 'Die Hard', 132, '1988-07-15', NULL),
-(11, 'Un uomo si risveglia per scoprire di essere stato dimenticato su Marte.', 'The Martian', 144, '2015-10-02', NULL),
-(12, 'Una banda di ragazzi cerca di salvare il loro quartiere da una costruzione sospetta.', 'The Goonies', 114, '1985-06-07', NULL),
-(13, 'Una coppia sposata si ritrova intrappolata in un loop temporale.', 'Groundhog Day', 101, '1993-02-12', NULL),
-(14, 'Un uomo si unisce a una missione per salvare il suo figlio rapito.', 'Ransom', 121, '1996-11-08', NULL),
-(15, 'Un bambino si ritrova a viaggiare nel tempo a bordo di una macchina del tempo.', 'Back to the Future', 116, '1985-07-03', NULL),
-(16, 'Un gruppo di amici si imbatte in un misterioso tabellone di gioco.', 'Jumanji', 104, '1995-12-15', NULL),
-(17, 'Una giovane donna cerca vendetta contro i suoi aggressori.', 'Kill Bill: Volume 1', 111, '2003-10-10', NULL),
-(18, 'Un gruppo di persone si ritrova intrappolato in una stanza con un serial killer.', 'Saw', 103, '2004-10-29', NULL),
-(19, 'Un uomo si risveglia senza memoria e deve ricostruire la sua identità.', 'The Bourne Identity', 119, '2002-06-14', NULL),
-(20, 'Un gruppo di giocatori di baseball affronta avversità personali e professionali.', 'A League of Their Own', 128, '1992-07-01', NULL);
+(1, 'Una storia romantica ambientata nell\'inverno del 1995 a Parigi.', 'Before Sunrise', 105, '1995-01-27', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQJUHmsXpixQsc9oYPZWO4gZiikVXVCLhoLQ&usqp=CAU'),
+(2, 'Un gruppo di dinosauri scappa da un parco a tema.', 'Jurassic Park', 127, '1993-06-11', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9aPoU992LsuaU2WPzaFXUT0mE0prxSyojeQ&usqp=CAU'),
+(3, 'Un ragazzo si ritrova coinvolto in un torneo di arti marziali.', 'Karate Kid', 126, '1984-06-22', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbmxgsE_gdXTPRbUR_9qS4YXCFMjj71p3sDA&usqp=CAU'),
+(4, 'Un gruppo di amici intraprende un viaggio attraverso il deserto americano.', 'Thelma & Louise', 130, '1991-05-24', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkJi4AIAVMFJVWtw08IFypRtAfm8HDqoR7Eg&usqp=CAU'),
+(5, 'Un uomo comincia a sospettare che il suo vicino sia un serial killer.', 'Disturbia', 105, '2007-04-13', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3j0i_MvJRul8AzWQkG2akVllVL6MwWIRtcQ&usqp=CAU'),
+(6, 'Una squadra di basket affronta sfide sia sul campo che fuori.', 'Space Jam', 88, '1996-11-15', 'https://i.pinimg.com/736x/d2/2a/f2/d22af2ffd32cb8becf497aaedf4faff9.jpg'),
+(7, 'Un uomo tenta di fermare un treno carico di esplosivi.', 'Speed', 116, '1994-06-10', 'https://i.pinimg.com/originals/f4/dd/49/f4dd498cd8b21778249f0f6ed0efbf2a.jpg'),
+(8, 'Un poliziotto di Los Angeles combatte contro una banda di ladri di auto.', 'Point Break', 122, '1991-07-12', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl8pJQXobYMmFc9nHEKxavoBUFNK3_5I2Ipg&usqp=CAU'),
+(9, 'Un adolescente si imbatte in un gruppo di giovani vampiri.', 'The Lost Boys', 97, '1987-07-31', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp8xZRP_4HkLXIuuD5_fKT4VXOkCMeMM20oQ&usqp=CAU'),
+(10, 'Un ex poliziotto sconfigge i terroristi in un grattacielo.', 'Die Hard', 132, '1988-07-15', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQHJFO8XqCi_L8ePiFUbc7eL5Q_P3ONV50dA&usqp=CAU'),
+(11, 'Un uomo si risveglia per scoprire di essere stato dimenticato su Marte.', 'The Martian', 144, '2015-10-02', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9Af8Zk7RpEery3lgiIC5Pv5y4Y5auzyYYdA&usqp=CAU'),
+(12, 'Una banda di ragazzi cerca di salvare il loro quartiere da una costruzione sospetta.', 'The Goonies', 114, '1985-06-07', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvurAdwsUP9aynVfW6sTsKgQTuoGvJTQc9fQ&usqp=CAU'),
+(13, 'Una coppia sposata si ritrova intrappolata in un loop temporale.', 'Groundhog Day', 101, '1993-02-12', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5848HQ5kMgPPwtHT9-nl4oFrk83VL5_40QQ&usqp=CAU'),
+(14, 'Un uomo si unisce a una missione per salvare il suo figlio rapito.', 'Ransom', 121, '1996-11-08', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKdwBJ_Gj7wTo6er9PuvxXACFCC2xJpoAmGw&usqp=CAU'),
+(15, 'Un bambino si ritrova a viaggiare nel tempo a bordo di una macchina del tempo.', 'Back to the Future', 116, '1985-07-03', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7Zu6SNm7acBv8ouNI8WvUCLefDq_vmiJEOw&usqp=CAU'),
+(16, 'Un gruppo di amici si imbatte in un misterioso tabellone di gioco.', 'Jumanji', 104, '1995-12-15', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDJInfTkSyw1j_NZl8CosrZndrV9suCsGLJw&usqp=CAU'),
+(17, 'Una giovane donna cerca vendetta contro i suoi aggressori.', 'Kill Bill: Volume 1', 111, '2003-10-10', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-3HAO5pm1vGlLSQgY3v_4Y7dIHA8GTXdNiQ&usqp=CAU'),
+(18, 'Un gruppo di persone si ritrova intrappolato in una stanza con un serial killer.', 'Saw', 103, '2004-10-29', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQGLyph6S-LtRYGKXArm1yaRIjAUcN1sp1vQ&usqp=CAU'),
+(19, 'Un uomo si risveglia senza memoria e deve ricostruire la sua identità.', 'The Bourne Identity', 119, '2002-06-14', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9N_nhPsRO1g72LEe-rfolGZGZ8MSHfJp54A&usqp=CAU'),
+(20, 'Un gruppo di giocatori di baseball affronta avversità personali e professionali.', 'A League of Their Own', 128, '1992-07-01', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRw2z_NF7eirlqBDZqLaQeqnuQvCNAdSkVyAA&usqp=CAU');
 
 -- --------------------------------------------------------
 
@@ -377,8 +377,39 @@ INSERT INTO `movie_genre` (`movie_id`, `genre_id`) VALUES
 
 CREATE TABLE `movie_user` (
   `user_id` int NOT NULL,
-  `movie_id` int NOT NULL
+  `movie_id` int NOT NULL,
+  `rating` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dump dei dati per la tabella `movie_user`
+--
+
+INSERT INTO `movie_user` (`user_id`, `movie_id`, `rating`) VALUES
+(1, 1, 4),
+(2, 1, 5),
+(3, 1, 1),
+(1, 2, 4),
+(2, 2, 2),
+(1, 3, 5),
+(3, 4, 2),
+(1, 5, 2),
+(2, 5, 4),
+(1, 8, 3),
+(2, 8, 5),
+(3, 8, 5),
+(3, 9, 3),
+(1, 10, 5),
+(2, 12, 4),
+(2, 13, 1),
+(3, 13, 2),
+(2, 14, 2),
+(1, 15, 2),
+(2, 15, 3),
+(1, 17, 1),
+(3, 18, 5),
+(3, 19, 4),
+(3, 20, 2);
 
 -- --------------------------------------------------------
 
@@ -391,9 +422,18 @@ CREATE TABLE `users` (
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `registration_date` datetime DEFAULT NULL
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `registration_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dump dei dati per la tabella `users`
+--
+
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `registration_date`) VALUES
+(1, 'user', '1', 'user1@gimail.com', 'user1', '2024-01-02 00:00:00'),
+(2, 'user', '2', 'user2@gimail.com', 'user2', '2024-01-16 09:13:13'),
+(3, 'user', '3', 'user3@gimail.com', 'user3', '2023-10-03 09:13:38');
 
 --
 -- Indici per le tabelle scaricate
@@ -448,7 +488,7 @@ ALTER TABLE `movie_genre`
 -- Indici per le tabelle `movie_user`
 --
 ALTER TABLE `movie_user`
-  ADD PRIMARY KEY (`user_id`,`movie_id`),
+  ADD PRIMARY KEY (`user_id`,`movie_id`,`rating`) USING BTREE,
   ADD KEY `movie_id` (`movie_id`);
 
 --
@@ -490,7 +530,7 @@ ALTER TABLE `movie`
 -- AUTO_INCREMENT per la tabella `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Limiti per le tabelle scaricate
