@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Login</title>
+		<!-- Bootstrap CSS -->
+		<link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+	</head>
+	<body class="bg-light">
+		<div class="container mt-5">
+			<div class="card">
+				<div class="card-header bg-primary text-white">
+					<h2 class="card-title mb-0">Film suggerito</h2>
+				</div>
+				<div class="card-body">
+					<h3 class="card-title">{{ recommended_movie.title }}</h3>
+					<img src="{{ recommended_movie.poster }}" alt="Poster" class="img-fluid mb-3" style="max-width: 200px; height: auto;">
+					<p class="card-text">
+						<strong>Anno:</strong>
+						{{ recommended_movie.released_year }}</p>
+					<p class="card-text">
+						<strong>Descrizione:</strong>
+						{{ recommended_movie.synopsis }}</p>
+					<a href="../api.php/" class="btn btn-primary">Home</a>
+				</div>
+			</div>
+		</div>
+		<script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>
